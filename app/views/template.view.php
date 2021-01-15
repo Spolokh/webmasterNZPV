@@ -8,18 +8,15 @@
 		<meta name="author" content="">
 
 		<!-- CSS -->
-		<link href="/css/fonts.css" rel="stylesheet">
-		<link href="/css/bootstrap.css" rel="stylesheet">
-		<link href="/css/style.css" rel="stylesheet">
-		<link href="/css/bootstrap-responsive.css" rel="stylesheet">
-
+		<link rel="stylesheet" href="/css/minified.css.php"/>
+		
 		<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
 		<!--[if lt IE 9]>
 		<script src="js/html5shiv.js"></script>
 		<![endif]-->
 
-    	<!-- Fav and touch icons -->
-      	<link rel="shortcut icon" href="ico/favicon.png">
+		<!-- Fav and touch icons -->
+		<link rel="shortcut icon" href="/ico/favicon.png">
   	</head>
   	<body>
 
