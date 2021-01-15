@@ -3,10 +3,11 @@
 header('Content-type: text/css');
 
 ob_start('compress'); /* css files for compression */
+
+include('fonts.css');
+include('bootstrap.css');
 include('style.css');
-include('modalbox.css');
-include('tools.css3.css'); 
-include('font-awesome.css');
+include('bootstrap-responsive.css'); 
 
 ob_end_flush();
 
