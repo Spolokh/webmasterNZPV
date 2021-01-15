@@ -114,10 +114,10 @@ function jsonParse(j) {
     var i;
     for(i = 0; i < j.length; i++) {
 		out+= '<tr>';
-		out+= '<td>' + j[i].id + '</td>';
+		out+= '<td>' + j[i].id +   '</td>';
 		out+= '<td>' + j[i].name + '</td>';
 		out+= '<td>' + j[i].mail + '</td>';
-		out+= '<td>' + j[i].phone + '</td>';
+		out+= '<td>' + j[i].phone+ '</td>';
 		out+= '<td><figure><img class="img-circle" src="/img/' + j[i].icon + '" alt="'+j[i].name+'" /><figure></td>';
 		out+= '<td><label class="option"><input name="item[]" type="checkbox" class="checkdelTask" value="'+j[i].id+'"/><span class="checkbox"></span></label></td>';
 		out+= '</tr>';
@@ -125,3 +125,8 @@ function jsonParse(j) {
 	$('#tbody').html(out);
 	$('#myTab li:first-child a').tab('show');
 }
+
+registerListener('load', setLazy);
+registerListener('load', lazyLoad);
+registerListener('scroll', lazyLoad);
+
