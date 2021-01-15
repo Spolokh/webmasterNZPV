@@ -11,7 +11,6 @@ class AjaxModel extends Model
 
 	public function __construct()
 	{
-
 		parent::__construct();
 
 		$this->header = $_SERVER['HTTP_X_REQUESTED_WITH'];
@@ -20,12 +19,6 @@ class AjaxModel extends Model
 		if ( !isset($this->action) or (!$this->header or strtolower($this->header) != 'xmlhttprequest') )
 		{
 			header("HTTP/1.1 500 Internal Server Error"); 
-			exit;
-		}
-
-		if (!isset($this->action))
-		{
-			header("HTTP/1.1 500 Internal Server Error");
 			exit;
 		}
 	}
@@ -55,8 +48,8 @@ class AjaxModel extends Model
 		}
 
 		if ( !preg_match('/^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){10,14}(\s*)?$/', $phone) )
-        {
-            $this->errors[] = 'Укажите корректный телефон.';
+        	{
+            		$this->errors[] = 'Укажите корректный телефон.';
 		}
 		
 		if ( reset($this->errors) )
@@ -176,13 +169,13 @@ class AjaxModel extends Model
 		if (!$this->isAuthorize)
 		{
 			header('HTTP/1.1 500 Internal Server Error');
-			exit ('Action None!');
+			exit;
 		}
 
-		if ($this->action !== 'delete')
+		if ($this->action != 'delete')
 		{
 			header("HTTP/1.1 500 Internal Server Error");
-			exit ('Action None!');
+			exit;
 		}
 
 		if (empty($_POST['item']))
