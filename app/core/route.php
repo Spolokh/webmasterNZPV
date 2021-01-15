@@ -53,30 +53,7 @@ class Route
 		// контроллер
 		$controller = new $contrName();
 
-		if (method_exists($controller, $action))
-		{
-			$controller->$action();
-		}
-		else 
-		{
-			self::Page404();
-		}
-		//method_exists($controller, $action) ? $controller->$action() : Route::ErrorPage404();
-	}
-
-	static function AutoLoader($class)
-	{
-		$file = 'libs'. DIRECTORY_SEPARATOR . str_replace('\\', '/', $class) . '.php';
-		 
-		if (file_exists($file))
-		{
-            include_once $file; //echo $file;
-			if (class_exists($class)) 
-			{
-                return TRUE;
-            }
-        }
-        return FALSE;
+		method_exists($controller, $action) ? $controller->$action() : Route::ErrorPage404();
 	}
 
 	static function Page404()
@@ -85,5 +62,5 @@ class Route
 		header('HTTP/1.1 404 Not Found');
 		header('Location: '.$host.'/page404');
 		exit;
-    }
+    	}
 }
