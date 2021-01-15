@@ -21,7 +21,7 @@ jQuery(function($)
 
 		ajax.open ('POST', '/ajax/registration'); 
 		ajax.setRequestHeader ('Cache-Control', 'no-cache');
-		ajax.setRequestHeader ("X-Requested-With", "XMLHttpRequest");
+		ajax.setRequestHeader ('X-Requested-With', 'XMLHttpRequest');
 		ajax.send(data); e.preventDefault();
 	});
 
@@ -54,7 +54,7 @@ jQuery(function($)
 
 		ajax.open('POST', '/ajax/addphone'); 
 		ajax.setRequestHeader('Cache-Control', 'no-cache');
-		ajax.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+		ajax.setRequestHeader ('X-Requested-With', 'XMLHttpRequest');
 		ajax.send(data); e.preventDefault();
 	});
 
@@ -93,9 +93,9 @@ jQuery(function($)
 			}
 		};
 
-		ajax.open ('POST', '/ajax/delbook'); 
-		ajax.setRequestHeader ('Cache-Control', 'no-cache');
-		ajax.setRequestHeader ("X-Requested-With", "XMLHttpRequest");
+		ajax.open('POST', '/ajax/delbook'); 
+		ajax.setRequestHeader('Cache-Control', 'no-cache');
+		ajax.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 		ajax.send(form); e.preventDefault();
 	});
 
