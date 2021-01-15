@@ -29,7 +29,7 @@ function number_format(number, decimals, point, thousands_sep)
 	}
 
 	i = parseInt(number = (+number || 0).toFixed(decimals)) + "";
-    j = (j = i.length) > 3 ? j % 3 : 0;
+    	j = (j = i.length) > 3 ? j % 3 : 0;
 
 	km = (j ? i.substr(0, j) + thousands_sep : "");
 	kw = i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thousands_sep); //kd = (decimals ? dec_point + Math.abs(number - i).toFixed(decimals).slice(2) : "");
@@ -54,39 +54,33 @@ function lazyLoad()
 				img.removeAttribute('data-src');
 			}
 		}
-	});
-    
-    cleanLazy();
+	});   
+    	cleanLazy();
 }
 
 function cleanLazy(){
-    lazy = Array.prototype.filter.call(lazy, function(e){ 
+	lazy = Array.prototype.filter.call(lazy, function(e){ 
 		return e.getAttribute('data-src');
 	});
 }
 
 function isInViewport(el){
-    var rect = el.getBoundingClientRect();
-    return (
-		rect.bottom >= 0 && 
-		rect.right >= 0 && 
+	var rect = el.getBoundingClientRect();
+	return (
+		rect.bottom >= 0 && rect.right >= 0 && 
 		rect.top <= (window.innerHeight || document.documentElement.clientHeight) && 
 		rect.left <= (window.innerWidth || document.documentElement.clientWidth)
 	);
 }
 
 function registerListener(ev, func) {
-    if (window.addEventListener) {
-        window.addEventListener(ev, func)
-    } else {
-        window.attachEvent('on' + ev, func)
-    }
+	if (window.addEventListener) {
+        	window.addEventListener(ev, func)
+    	} else {
+        	window.attachEvent('on' + ev, func)
+	}
 }
 
 function print(output){
 	document.write(output);
 }
-
-registerListener('load', setLazy);
-registerListener('load', lazyLoad);
-registerListener('scroll', lazyLoad);
