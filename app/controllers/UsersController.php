@@ -14,7 +14,7 @@ class usersController extends Controller
 		$this->view  = new View();
 	}
 
-	public function index() // https://rt.bongacams11.com   // L))VWI(Z&x(f9S(S^$L7pTM4
+	public function index()
 	{
 		$this->view->render('users.view.php', 'template.view.php',
 		[
