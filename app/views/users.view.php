@@ -67,7 +67,7 @@ else
 				<td colspan="2" style="text-align: left;">
 					&nbsp;Всего: <?=$query->count(); ?>
 				</td>
-				<td colspan="4" style="text-align: right;">
+				<td colspan="4" class="text-right">
 				<?php if ($login) { ?>
 					<input name="action" type="hidden" value="delete" />
 					<button type="submit" class="btn btn-default"> Удалить </button>
