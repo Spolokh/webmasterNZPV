@@ -42,7 +42,7 @@ class AjaxModel extends Model
 			$$k = trim(htmlspecialchars($v));
 		}
 
-		if (!isset($name, $mail, $message))
+		if (!isset($name, $mail, $sessid, $message) or $sessid !== session_id())
 		{
 			header("HTTP/1.1 500 Internal Server Error");
 			exit;
