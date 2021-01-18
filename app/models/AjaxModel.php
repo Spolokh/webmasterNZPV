@@ -9,7 +9,7 @@ class AjaxModel extends Model
 	protected $upload;
 	protected $header;
 	protected $errors = [];
-	protected $mailto = 'yuryspolokh@ya.ru';
+	protected $mailto = 'your@mail';
 	protected $charset= 'utf-8';
 
 	public function __construct()
