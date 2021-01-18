@@ -1,6 +1,7 @@
 <?php
 
 use Upload\Upload;
+use PHPMailer\PHPMailer;
 
 class AjaxModel extends Model
 {
