@@ -29,5 +29,10 @@ class AjaxController extends Controller
 	{
 		$this->model->deleteBook();
 	}
+	
+	public function contact() 
+	{
+		$this->model->contact();
+	}
 }
  
