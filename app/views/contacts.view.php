@@ -20,7 +20,7 @@
 
 		<div class="form-group">
 			<label class="option">
-				<input type="checkbox" name="check" class="checkdelTask" value="1"/>
+				<input type="checkbox" name="copy" value="1"/>
 				<span class="checkbox"></span> &nbsp; Прислать копию ?
 			</label>
 		</div>
