@@ -99,7 +99,39 @@ jQuery(function($)
 		ajax.send(form); e.preventDefault();
 	});
 
+	$('#contactForm').submit (function(e)
+	{
+		var form = new FormData(this);
+		var file = this.getAttribute('action');
+		var click = $(this).find('button[type="submit"]')
+			.attr('disabled', true)
+			.text('Подождите')
 
+		var ajax = getXmlHttp();
+		ajax.onreadystatechange = function()
+		{
+			if ( this.readyState == 4 )
+			{
+				if ( this.status == 200 )
+				{
+					$('#result').html(this.responseText);
+					$('button[type="reset"]').click();
+				}
+				if ( this.status == 500 )
+				{
+					alert(this.responseText);
+				}
+
+				click.attr('disabled', null).text('Отправить');
+			}
+		};
+
+		ajax.open('POST', file); 
+		ajax.setRequestHeader('Cache-Control', 'no-cache');
+		ajax.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+		ajax.send(form); e.preventDefault();
+	});
+	
 	$('#myTab a').on('click', function (e) {
 		e.preventDefault()
 		$(this).tab('show')
