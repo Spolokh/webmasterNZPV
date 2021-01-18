@@ -16,8 +16,8 @@ class AjaxModel extends Model
 	{
 		parent::__construct();
 
-		$this->header = $_SERVER['HTTP_X_REQUESTED_WITH'];
 		$this->action = $_POST['action'] ?? null;
+		$this->header = $_SERVER['HTTP_X_REQUESTED_WITH'];
 
 		if ( !isset($this->action) or (!$this->header or strtolower($this->header) != 'xmlhttprequest') )
 		{
