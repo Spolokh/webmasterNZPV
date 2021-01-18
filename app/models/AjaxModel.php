@@ -8,6 +8,8 @@ class AjaxModel extends Model
 	protected $upload;
 	protected $header;
 	protected $errors = [];
+	protected $mailto = 'yuryspolokh@ya.ru';
+	protected $charset= 'utf-8';
 
 	public function __construct()
 	{
@@ -21,6 +23,62 @@ class AjaxModel extends Model
 			header("HTTP/1.1 500 Internal Server Error"); 
 			exit;
 		}
+	}
+	
+	public function contact() 
+	{
+		if ($this->action != 'contact')
+		{
+			header("HTTP/1.1 500 Internal Server Error");
+			exit;
+		}
+
+		foreach ($_POST as $k => $v)
+		{
+			$$k = trim(htmlspecialchars($v));
+		}
+
+		if (!isset($name, $mail, $message))
+		{
+			header("HTTP/1.1 500 Internal Server Error");
+			exit;
+		}
+
+		if (empty($name))
+		{
+			$this->errors[] = 'Введите ваше Имя!';
+		}
+
+		if (empty($mail) or !filter_var($mail, FILTER_VALIDATE_EMAIL))
+		{
+			$this->errors[] = 'Введите вашу почту корректно!';
+		}
+
+		if ( reset($this->errors) )
+		{
+			header('HTTP/1.1 500 Internal Server Error');
+			echo join ('<li>', array_values($this->errors));
+			exit;
+		}
+
+		$mailer = new PHPMailer;
+		$mailer->From     = $mail;
+		$mailer->FromName = $name;
+		$mailer->CharSet  = $this->charset;
+		$mailer->Sender   = $mail;
+		$mailer->Subject  = $subject;
+		$mailer->Body     = $message;
+		$mailer->AddAddress($this->mailto, $subject);
+		$mailer->AddReplyTo($mail, $name);
+		$mailer->IsHTML(true);
+		//empty($copy) or $mailer->AddCC( $mail, 'Copy' );
+		if (!empty($copy)) {
+			$mailer->AddCC( $mail, 'Copy' );
+		}
+		$result = $mailer->Send() ? 'Ваше сообщение успешно отправленно!' : $mailer->ErrorInfo; 
+		$mailer->ClearAddresses(); 
+		$mailer->ClearAttachments();
+		exit($result);
 	}
 	
 	public function setPhone($id = 0, array $json = [], string $result = '', $jsonUnicode = JSON_UNESCAPED_UNICODE) : string
