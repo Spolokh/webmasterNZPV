@@ -8,9 +8,9 @@ class AjaxModel extends Model
 	protected $action;
 	protected $upload;
 	protected $header;
+	protected $mailto;
 	protected $errors = [];
-	protected $mailto = 'your@mail';
-	protected $charset= 'utf-8';
+	protected $charset;
 
 	public function __construct()
 	{
@@ -24,6 +24,9 @@ class AjaxModel extends Model
 			header("HTTP/1.1 500 Internal Server Error"); 
 			exit;
 		}
+		
+		$this->mailto = getConfig('admin_mail');
+		$this->charset = getConfig('charset');
 	}
 	
 	public function contact() 
