@@ -27,6 +27,7 @@
 
 		<br/>
 		<input type="hidden" name="action" value="contact" />
+		<input type="hidden" name="sessid" value="<?=session_id()?>" />
 		<button type="submit" class="btn btn-primary">Отправить</button>
 		<button type="reset"  class="btn btn-primary">Очистить</button>
 		<ul id="result"></ul>
