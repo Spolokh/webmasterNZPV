@@ -64,24 +64,23 @@ class AjaxModel extends Model
 			echo join ('<li>', array_values($this->errors));
 			exit;
 		}
-
-		$mailer = new PHPMailer;
-		$mailer->From     = $mail;
-		$mailer->FromName = $name;
-		$mailer->CharSet  = $this->charset;
-		$mailer->Sender   = $mail;
-		$mailer->Subject  = $subject;
-		$mailer->Body     = $message;
-		$mailer->AddAddress($this->mailto, $subject);
-		$mailer->AddReplyTo($mail, $name);
-		$mailer->IsHTML(true);
-		//empty($copy) or $mailer->AddCC( $mail, 'Copy' );
-		if (!empty($copy)) {
-			$mailer->AddCC( $mail, 'Copy' );
+		
+		try {
+			$mailer = new PHPMailer;
+			$mailer->SetFrom ($mail, $name);
+			$mailer->CharSet  = $this->charset;
+			//$mailer->Subject  = $subject;
+			$mailer->Body     = $message;
+			$mailer->AddAddress($this->mailto, $subject);
+			$mailer->AddReplyTo($mail, $name);
+			$mailer->IsHTML(true);
+			$result = $mailer->Send() ? 'Ваше сообщение успешно отправленно!' : $mailer->ErrorInfo; 
+			$mailer->ClearAddresses(); 
+			$mailer->ClearAttachments();
+			
+		} catch (\Exception $e) {
+			$result = $e->getMessage();
 		}
-		$result = $mailer->Send() ? 'Ваше сообщение успешно отправленно!' : $mailer->ErrorInfo; 
-		$mailer->ClearAddresses(); 
-		$mailer->ClearAttachments();
 		exit($result);
 	}
 	
