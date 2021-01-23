@@ -2,8 +2,6 @@
 
 class Model
 {
-	const TABLE = 'users';
-
 	protected $member = [];
 	protected $username;
 	protected $password;
@@ -14,8 +12,7 @@ class Model
 	{
 		$this->logOut();
 		$this->isAuthorize = Session::has('username') 
-		? Session::get('username') 
-		: $this->checkLogin();
+		? Session::get('username') : $this->checkLogin();
 	}
 
 	public function checkLogin($k = 'isLogget')
