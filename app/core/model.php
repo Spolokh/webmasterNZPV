@@ -28,9 +28,8 @@ class Model
 			return false;
 		}
 		
-		$member = ORM::forTable('users')->where([ //$where = ['username'=> $this->username, 'password'=> md5($this->password)];
-			'username' => $this->username, 
-			'password' => md5($this->password)
+		$member = ORM::forTable('users')->where([
+			'username' => $this->username, 'password' => md5($this->password)
 		]);
 
 		if ($member->findOne())
