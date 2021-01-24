@@ -97,7 +97,7 @@ class AjaxModel extends Model
 			$$k = trim(htmlspecialchars($v));
 		}
 
-		if (!isset($firstname, $lastname, $mail, $phone))
+		if (!isset($name, $family, $mail, $phone))
 		{
 			header("HTTP/1.1 500 Internal Server Error");
 			exit('Post None!');
@@ -142,7 +142,7 @@ class AjaxModel extends Model
 		}
 
 		$result = ORM::forTable('books')->create();
-		$result->name = $firstname .' '. $lastname;
+		$result->name = $name .' '. $family;
 		$result->mail = $mail;
 		$result->icon = $icon ? $icon : 'default.png';
 		$result->phone = $phone;
