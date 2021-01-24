@@ -81,8 +81,8 @@ else
 
   	<div class="tab-pane fade" id="form" role="tabpanel" aria-labelledby="form-tab">   
 		<form method="POST" id="addPhone">																
-			<input name="name[]" type="text" class="form-control span5" placeholder="Имя" required /> &nbsp;
-			<input name="name[]" type="text" class="form-control span5" placeholder="Фамилия" required />
+			<input name="name" type="text" class="form-control span5" placeholder="Имя" required /> &nbsp;
+			<input name="family" type="text" class="form-control span5" placeholder="Фамилия" required />
 			<input name="mail" type="email" class="form-control span5" placeholder="E-mail" required /> &nbsp;
 			<input name="phone" type="tel" class="form-control span5" placeholder="Телефон" required />
 			<input name="icon" type="file" class="form-control span5" />
