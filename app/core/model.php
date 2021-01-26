@@ -11,14 +11,14 @@ class Model
 	public function __construct() 
 	{
 		$this->logOut();
-		$this->isAuthorize = Session::has('username') 
-		? Session::get('username') : $this->checkLogin();
+		$this->isAuthorize = Session::has('username') ?
+		Session::get('username') : $this->checkLogin();
 	}
 
 	public function checkLogin($k = 'isLogget')
 	{
 		$this->username = $_POST['username'] ?? Session::get('username');
-		$this->password = $_POST['password'] ?? Session::get('username');
+		$this->password = $_POST['password'] ?? Session::get('password');
 
 		if ( empty($this->username) || empty($this->password) )
 		{
@@ -56,4 +56,19 @@ class Model
 			exit;
 		}
 	}
+	
+	/**
+	* Запись ошибок
+	*/
+
+	protected function logWrite($message, $write = false)
+	{
+		if ($write === false)
+		{
+		    return;
+		}
+
+		$output = date('d.m.Y H:i:s') . PHP_EOL . $message . PHP_EOL . '-------------------------' . PHP_EOL;
+		file_put_contents(root . '/logs.txt', $output, FILE_APPEND | LOCK_EX);
+    }
 }
