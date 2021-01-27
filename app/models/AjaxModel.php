@@ -21,7 +21,7 @@ class AjaxModel extends Model
 
 		if ( !isset($this->action) or (!$this->header or strtolower($this->header) != 'xmlhttprequest') )
 		{
-			header("HTTP/1.1 500 Internal Server Error"); 
+			header('HTTP/1.1 500 Internal Server Error');
 			exit;
 		}
 		
@@ -33,7 +33,7 @@ class AjaxModel extends Model
 	{
 		if ($this->action != 'contact')
 		{
-			header("HTTP/1.1 500 Internal Server Error");
+			header('HTTP/1.1 500 Internal Server Error');
 			exit;
 		}
 
@@ -44,7 +44,7 @@ class AjaxModel extends Model
 
 		if (!isset($name, $mail, $sessid, $message) or $sessid !== session_id())
 		{
-			header("HTTP/1.1 500 Internal Server Error");
+			header('HTTP/1.1 500 Internal Server Error');
 			exit;
 		}
 
@@ -88,7 +88,7 @@ class AjaxModel extends Model
 	{
 		if ($this->action != 'addbook')
 		{
-			header("HTTP/1.1 500 Internal Server Error");
+			header('HTTP/1.1 500 Internal Server Error');
 			exit ('Action None!');
 		}
 
@@ -99,7 +99,7 @@ class AjaxModel extends Model
 
 		if (!isset($name, $family, $mail, $phone))
 		{
-			header("HTTP/1.1 500 Internal Server Error");
+			header('HTTP/1.1 500 Internal Server Error');
 			exit('Post None!');
 		}
 
