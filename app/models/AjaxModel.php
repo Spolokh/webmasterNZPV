@@ -21,7 +21,7 @@ class AjaxModel extends Model
 
 		if ( !isset($this->action) or (!$this->header or strtolower($this->header) != 'xmlhttprequest') )
 		{
-			header('HTTP/1.1 500 Internal Server Error');
+			header('HTTP/1.1 403 Internal Server Error');
 			exit;
 		}
 		
