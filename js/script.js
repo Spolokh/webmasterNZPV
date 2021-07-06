@@ -1,37 +1,53 @@
+
+registerListener('load', setLazy);
+registerListener('load', lazyLoad);
+registerListener('scroll', lazyLoad);
+
 jQuery(function($) 
 {
 	$('#registration').submit(function(e)
 	{
-		var data = new FormData(this);
+		var form = new FormData(this);
 		var ajax = getXmlHttp();
+		var post = e.target.method;
+		var path = this.getAttribute('action');
 
-		ajax.onreadystatechange = function()
+		var click = $(this).find('input[type="submit"]');
+			click.attr('disabled', true);
+
+		ajax.onload = function()
 		{
-			if ( this.readyState == 4 ) {
-				if ( this.status == 200 ) {
-					$('#result').html(this.responseText);
-					$('input[type="reset"]').click();
-				}
+			if ( this.status == 200 )
+			{
+				$('#result').html(this.responseText);
+				$('input[type="reset"]').click();
+			}
 
-				if ( this.status == 500 ) {
-					$('#result').html(this.responseText);
-				}
-			} 
+			if ( this.status == 500 )
+			{
+				$('#result').html(this.responseText);
+			}
+			click.attr('disabled', null);
 		};
 
-		ajax.open ('POST', '/ajax/registration'); 
+		ajax.onerror = function()
+		{
+		};
+
+		ajax.open (post, path); 
 		ajax.setRequestHeader ('Cache-Control', 'no-cache');
 		ajax.setRequestHeader ('X-Requested-With', 'XMLHttpRequest');
-		ajax.send(data); e.preventDefault();
+		ajax.send(form); e.preventDefault();
 	});
 
 	$('#addPhone').submit(function(e)
 	{
-		var data = new FormData(this);
+		var json;
+		var form = new FormData(this);
 		var ajax = getXmlHttp();
-		var form = $(this);
-		var click = form.find('button[type="submit"]');
-			click.text('Wait...').attr('disabled', true);
+		var post = e.target.method;
+		var click = $(this).find('button[type="submit"]');
+			click.attr('disabled', true);
 
 		ajax.onreadystatechange = function()
 		{
@@ -39,23 +55,23 @@ jQuery(function($)
 			{
 				if ( this.status == 200 )
 				{
-					var json = JSON.parse(this.responseText);
+					json = JSON.parse(this.responseText);	//var json = this.response;
 					jsonParse(json);
-					form[0].reset();
+					$('button[type="reset"]').click();
 				}
 
 				if ( this.status == 500 )
 				{
 					alert(this.responseText);
 				}
-				click.text('Добавить').attr('disabled', null);
+				click.attr('disabled', null);
 			}
 		};
 
-		ajax.open('POST', '/ajax/addphone'); 
+		ajax.open(post, '/ajax/addphone'); 
 		ajax.setRequestHeader('Cache-Control', 'no-cache');
 		ajax.setRequestHeader ('X-Requested-With', 'XMLHttpRequest');
-		ajax.send(data); e.preventDefault();
+		ajax.send(form); e.preventDefault();
 	});
 
 	$('#editPhone').submit (function(e)
@@ -101,63 +117,43 @@ jQuery(function($)
 
 	$('#contactForm').submit (function(e)
 	{
+		var ajax = getXmlHttp();
 		var form = new FormData(this);
+		var post = this.getAttribute('method');
 		var file = this.getAttribute('action');
 		var click = $(this).find('button[type="submit"]')
-			.attr('disabled', true)
-			.text('Подождите')
+			.attr('disabled', true);
 
-		var ajax = getXmlHttp();
-		ajax.onreadystatechange = function()
+		ajax.onload = function()
 		{
-			if ( this.readyState == 4 )
+			if ( this.status == 200 )
 			{
-				if ( this.status == 200 )
-				{
-					$('#result').html(this.responseText);
-					$('button[type="reset"]').click();
-				}
-				if ( this.status == 500 )
-				{
-					alert(this.responseText);
-				}
-
-				click.attr('disabled', null).text('Отправить');
+				$('#result').html(this.responseText);
+				$('button[type="reset"]').click();
 			}
+			if ( this.status == 500 )
+			{
+				alert(this.responseText);
+			}
+
+			click.attr('disabled', null);
 		};
 
-		ajax.open('POST', file); 
+		ajax.open(post, file); 
 		ajax.setRequestHeader('Cache-Control', 'no-cache');
 		ajax.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 		ajax.send(form); e.preventDefault();
 	});
-	
+
 	$('#myTab a').on('click', function (e) {
-		e.preventDefault()
-		$(this).tab('show')
+		e.preventDefault();
+		$(this).tab('show');
 	});
 
-	$('input[type="tel"]').mask("+7 (999) 999-99-99");
+	$('#xhrField').on('change', function()
+	{
+		uploadImage(this.files[0], this, 7);
+	});
+
+	$('input[type="tel"]').mask('+7 (999) 999-99-99');
 });
-
-function jsonParse(j) {
-    var out = '';
-    var i;
-    for(i = 0; i < j.length; i++) {
-		out+= '<tr>';
-		out+= '<td>' + j[i].id +   '</td>';
-		out+= '<td>' + j[i].name + '</td>';
-		out+= '<td>' + j[i].mail + '</td>';
-		out+= '<td>' + j[i].phone+ '</td>';
-		out+= '<td><figure><img class="img-circle" src="/img/' + j[i].icon + '" alt="'+j[i].name+'" /><figure></td>';
-		out+= '<td><label class="option"><input name="item[]" type="checkbox" class="checkdelTask" value="'+j[i].id+'"/><span class="checkbox"></span></label></td>';
-		out+= '</tr>';
-	}
-	$('#tbody').html(out);
-	$('#myTab li:first-child a').tab('show');
-}
-
-registerListener('load', setLazy);
-registerListener('load', lazyLoad);
-registerListener('scroll', lazyLoad);
-
