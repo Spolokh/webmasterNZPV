@@ -5,12 +5,12 @@ use PHPMailer\PHPMailer;
 
 class AjaxModel extends Model
 {
-	protected $action;
-	protected $upload;
-	protected $header;
-	protected $mailto;
-	protected $errors = [];
-	protected $charset;
+	private $action;
+	private $upload;
+	private $header;
+	private $mailto;
+	private $errors = [];
+	private $charset = 'utf-8';
 
 	public function __construct()
 	{
