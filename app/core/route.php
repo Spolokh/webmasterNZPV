@@ -53,7 +53,7 @@ class Route
 		// контроллер
 		$controller = new $contrName();
 
-		method_exists($controller, $action) ? $controller->$action() : Route::ErrorPage404();
+		method_exists($controller, $action) ? $controller->$action() : Route::Page404();
 	}
 
 	static function Page404()
