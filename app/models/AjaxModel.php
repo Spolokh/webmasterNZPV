@@ -21,8 +21,7 @@ class AjaxModel extends Model
 
 		if ( !isset($this->action) or (!$this->header or strtolower($this->header) != 'xmlhttprequest') )
 		{
-			header('HTTP/1.1 403 Internal Server Error');
-			exit;
+			$this->cute_response_code( 500, 0 );
 		}
 		
 		$this->mailto = getConfig('admin_mail');
@@ -33,8 +32,7 @@ class AjaxModel extends Model
 	{
 		if ($this->action != 'contact')
 		{
-			header('HTTP/1.1 500 Internal Server Error');
-			exit;
+			$this->cute_response_code( 500, 0 );
 		}
 
 		foreach ($_POST as $k => $v)
@@ -44,8 +42,7 @@ class AjaxModel extends Model
 
 		if (!isset($name, $mail, $sessid, $message) or $sessid !== session_id())
 		{
-			header('HTTP/1.1 500 Internal Server Error');
-			exit;
+			$this->cute_response_code( 500, 0 );
 		}
 
 		if (empty($name))
@@ -88,8 +85,7 @@ class AjaxModel extends Model
 	{
 		if ($this->action != 'addbook')
 		{
-			header('HTTP/1.1 500 Internal Server Error');
-			exit ('Action None!');
+			$this->cute_response_code( 500, 0 );
 		}
 
 		foreach ($_POST as $k => $v)
@@ -99,8 +95,7 @@ class AjaxModel extends Model
 
 		if (!isset($name, $family, $mail, $phone))
 		{
-			header('HTTP/1.1 500 Internal Server Error');
-			exit('Post None!');
+			$this->cute_response_code( 500, 0 );
 		}
 
 		if ( !filter_var($mail, FILTER_VALIDATE_EMAIL) )
@@ -115,9 +110,9 @@ class AjaxModel extends Model
 		
 		if ( reset($this->errors) )
 		{
-			header('HTTP/1.1 500 Internal Server Error');
-			echo join ("\n", array_values($this->errors));
-			exit;
+			$this->cute_response_code( 
+				500, join ('<br/>', array_values($this->errors))
+			);
 		}
 
 		if ($_FILES['icon']['name'] || !$_FILES['icon']['error'])
@@ -209,9 +204,9 @@ class AjaxModel extends Model
 
 		if (reset($this->errors))
 		{
-			header('HTTP/1.1 500 Internal Server Error'); //403
-			echo join ('<br/>', array_values($this->errors)) ;
-			exit;
+			$this->cute_response_code( 
+				500, join ('<br/>', array_values($this->errors))
+			);
 		}
 
 		$user = ORM::forTable('users')->create();
@@ -229,20 +224,17 @@ class AjaxModel extends Model
 	{
 		if (!$this->isAuthorize)
 		{
-			header('HTTP/1.1 500 Internal Server Error');
-			exit;
+			$this->cute_response_code( 500, 0 );
 		}
 
 		if ($this->action != 'delete')
 		{
-			header("HTTP/1.1 500 Internal Server Error");
-			exit;
+			$this->cute_response_code( 500, 0 );
 		}
 
 		if (empty($_POST['item']))
 		{
-			header('HTTP/1.1 500 Internal Server Error');
-			exit ('Вы никого не выбрали.');
+			$this->cute_response_code( 500, 'Вы никого не выбрали.' );
 		}
 		
 		foreach ($_POST['item'] as $k => $v)
@@ -257,5 +249,24 @@ class AjaxModel extends Model
 			$query->delete();
 		}
 		exit;
+	}
+	
+	private function cute_response_code( int $code, $exit = NULL )
+	{
+		http_response_code($code) ;
+		if (isset($exit))
+		{
+			exit ($exit);
+		}
+	}
+
+	private function sessid( string $key = 'sessid')
+	{
+		return ( !isset($_POST[$key]) or $_POST[$key] !== session_id() ) ? false : true;
+	}
+
+	private function isXmlHttpRequest()
+	{
+		return ( !isset($this->header) or strtolower($this->header) !== 'xmlhttprequest') ? false : true;
 	}
 }
