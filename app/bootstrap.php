@@ -68,5 +68,5 @@ function AutoLoader($class)
 function getConfig($k)
 {
     global $config;
-    return $config[$k];
+    return $config[$k] ?? false;
 }
