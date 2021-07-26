@@ -55,6 +55,24 @@ class Route
 
 		method_exists($controller, $action) ? $controller->$action() : Route::Page404();
 	}
+	
+	public static function loader()
+	{
+		spl_autoload_register(function ($class) 
+		{   
+			$file = VENDOR . DIRECTORY_SEPARATOR . str_replace('\\', '/', $class).'.php';
+
+			if ( file_exists($file) )
+			{
+				require_once $file;
+				if ( class_exists($class) ) 
+				{
+					return true;
+				}
+	    		}
+	    		return false;
+		});
+	}
 
 	static function Page404()
 	{
