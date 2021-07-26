@@ -46,8 +46,7 @@ $db->exec("CREATE TABLE IF NOT EXISTS books (
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
 */
 
-//spl_autoload_register('AutoLoader');
-Route::Loader();
+Route::loader();
 Route::start();
 
 function getConfig($k)
