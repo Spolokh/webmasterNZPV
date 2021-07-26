@@ -4,6 +4,7 @@ session_start();
 
 define('root', dirname(__DIR__));
 define('rootpath', dirname(__FILE__));
+define('VENDOR', root. '/libs');
 define('UPLOADS', root. '/uploads');
 define('VIEW_PATH', rootpath.'/views');
 define('MODEL_PATH', rootpath.'/models');
@@ -45,25 +46,9 @@ $db->exec("CREATE TABLE IF NOT EXISTS books (
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
 */
 
-spl_autoload_register('AutoLoader');
-
+//spl_autoload_register('AutoLoader');
+Route::Loader();
 Route::start();
-
-function AutoLoader($class)
-{
-    $file = 'libs' .DIRECTORY_SEPARATOR. str_replace('\\', '/', $class).'.php';
-        
-    if (file_exists($file))
-    {
-        include_once $file;
-        
-        if (class_exists($class)) 
-        {
-            return TRUE;
-        }
-    }
-    return FALSE;
-}
 
 function getConfig($k)
 {
