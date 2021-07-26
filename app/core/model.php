@@ -11,7 +11,8 @@ class Model
 	{
 		$this->logOut();
 		$this->isAuthorize = Session::has('username') ?
-		Session::get('username') : $this->checkLogin();
+			Session::get('username') : 
+			$this->checkLogin();
 	}
 
 	public function checkLogin($k = 'isLogget')
@@ -24,16 +25,17 @@ class Model
 			return false;
 		}
 		
-		$member = ORM::forTable('users')->select(['id', 'mail', 'username'])->where([
-			'username' => $this->username, 'password' => md5($this->password)
-		]);
-
-		if ($member->findOne())
+		$member = ORM::forTable('users')
+			->select(['id', 'mail', 'username'])
+			->where([ 'username' => $this->username, 'password' => md5($this->password)
+		])	->findOne();
+		
+		if ( !empty ($member) )
 		{
-			Session::set('username', $this->username);
-			Session::set('isLogget', true);
-			return true;
-			
+			Session::set('username', $member->username);
+			Session::set('usermail', $member->mail);
+			Session::set($k, true);
+			return $member->username;
 		} else {
 			return false;
 		}
