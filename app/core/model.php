@@ -2,7 +2,6 @@
 
 class Model
 {
-	protected $member = [];
 	protected $username;
 	protected $password;
 
@@ -25,16 +24,15 @@ class Model
 			return false;
 		}
 		
-		$member = ORM::forTable('users')->where([
+		$member = ORM::forTable('users')->select(['id', 'mail', 'username'])->where([
 			'username' => $this->username, 'password' => md5($this->password)
 		]);
 
 		if ($member->findOne())
 		{
 			Session::set('username', $this->username);
-			Session::set('password', $this->password);
 			Session::set('isLogget', true);
-			return $this->username;
+			return true;
 			
 		} else {
 			return false;
