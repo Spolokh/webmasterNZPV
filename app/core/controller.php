@@ -11,7 +11,9 @@ abstract class Controller
 		$this->view  = new View();
 	}
 	
-	// действие (action), вызываемое по умолчанию
+	// действие вызываемое по умолчанию
+
+	
 	public function index()
 	{
 	
