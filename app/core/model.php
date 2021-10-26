@@ -65,17 +65,17 @@ abstract class Model
 	}
 
 	/**
-     * Запись ошибок
-     */
+	 * Запись ошибок
+	 */
 
 	protected function logWrite($message, $write = false)
-    {
-        if ($write === false)
-        {
-            return;
-        }
+	{
+	if ($write === false)
+	{
+		return;
+	}
 
-        $output = date('d.m.Y H:i:s') . PHP_EOL . $message . PHP_EOL . '-------------------------' . PHP_EOL;
-        file_put_contents(root . '/logs.txt', $output, FILE_APPEND | LOCK_EX);
-    }
+	$output = date('d.m.Y H:i:s') . PHP_EOL . $message . PHP_EOL . '-------------------------' . PHP_EOL;
+	file_put_contents(root . '/logs.txt', $output, FILE_APPEND | LOCK_EX);
+	}
 }
