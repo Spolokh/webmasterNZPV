@@ -12,8 +12,6 @@ abstract class Controller
 	}
 	
 	// действие вызываемое по умолчанию
-
-	
 	public function index()
 	{
 	
